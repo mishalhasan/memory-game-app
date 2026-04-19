@@ -1,3 +1,5 @@
+import { processImages } from "../utils/helpers";
+
 export const fetchCandyLandPhotos = async () => {
   try {
     console.log("Loading images from Unsplash API...");
@@ -24,34 +26,4 @@ export const fetchCandyLandPhotos = async () => {
   }
 };
 
-/*
- * Filters out unnecessary data and only keeps relevant photo data with relevant changes 
- */
-export function processImages(rawImgsData) {
-  const cleanImgData = [];
 
-  for (const img of rawImgsData) {
-    // if (img.width === img.height) {
-    // Grab raw URL and resize to 400x400
-    const imgUrl = `${img.urls.raw}&w=400&h=400`;
-
-    //Grab photo info
-    const id = img.id;
-    const description = img.alt_description;
-
-    // Get photographer info + profile link with UTM parameters
-    const photographer = img.user.name;
-    const profileUrl = `${img.user.links.html}?utm_source=your_app_name&utm_medium=referral`;
-
-    cleanImgData.push({
-      imgUrl,
-      imgID: id,
-      description,
-      photographer,
-      profileUrl,
-    });
-    // }
-  }
-
-  return cleanImgData;
-}

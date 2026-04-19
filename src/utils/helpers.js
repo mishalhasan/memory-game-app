@@ -1,6 +1,38 @@
 // export const isValidCard = (val) =>
 //   val !== "" && val !== null && val !== undefined && val !== false;
 
+/*
+ * Filters out unnecessary data and only keeps relevant photo data with relevant changes
+ */
+export function processImages(rawImgsData) {
+  const cleanImgData = [];
+
+  for (const img of rawImgsData) {
+    // if (img.width === img.height) {
+    // Grab raw URL and resize to 400x400
+    const imgUrl = `${img.urls.raw}&w=400&h=400`;
+
+    //Grab photo info
+    const id = img.id;
+    const description = img.alt_description;
+
+    // Get photographer info + profile link with UTM parameters
+    const photographer = img.user.name;
+    const profileUrl = `${img.user.links.html}?utm_source=your_app_name&utm_medium=referral`;
+
+    cleanImgData.push({
+      imgUrl,
+      imgID: id,
+      description,
+      photographer,
+      profileUrl,
+    });
+    // }
+  }
+
+  return cleanImgData;
+}
+
 export const isValidCard = (card) =>
   card && card.uniqueID != null && card.uniqueID !== "";
 
@@ -48,3 +80,4 @@ export const toggleCardStatus = (prevCards, targetID, prop, propVal) => {
 };
 
 export const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+

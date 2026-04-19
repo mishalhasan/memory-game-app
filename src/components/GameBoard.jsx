@@ -1,11 +1,11 @@
 import { useState, useEffect, useContext } from "react";
 import { GameContext } from "../context/GameContext.jsx";
 import Card from "./Card.jsx";
-import { useGameLogic } from "../hooks/useGameLogic.js";
+import { useGameEngine } from "../hooks/useGameEngine.js";
 
 export default function GameBoard() {
-  const { cards } = useContext(GameContext);
-  const { handleCardClick, cardsClickable } = useGameLogic();
+  const { cards, handleCardClick, cardsClickable } = useContext(GameContext);
+  //const { handleCardClick, cardsClickable } = useGameEngine();
 
   return (
     //<main className="min-h-screen w-full flex justify-center py-8 px-4">
