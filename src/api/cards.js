@@ -1,9 +1,7 @@
-import "../utils/helpers.js";
-
 export const fetchCandyLandPhotos = async () => {
   try {
-    console.log(import.meta.env.VITE_API_URL);
-    console.log(import.meta.env.VITE_API_KEY);
+    console.log("Loading images from Unsplash API...");
+
     const response = await fetch(import.meta.env.VITE_API_URL, {
       headers: {
         Authorization: `Client-ID ${import.meta.env.VITE_API_KEY}`,
@@ -22,9 +20,13 @@ export const fetchCandyLandPhotos = async () => {
     return cleanData;
   } catch (error) {
     console.error("Error fetching photos:", error);
+    return error;
   }
 };
 
+/*
+ * Filters out unnecessary data and only keeps relevant photo data with relevant changes 
+ */
 export function processImages(rawImgsData) {
   const cleanImgData = [];
 
@@ -43,10 +45,8 @@ export function processImages(rawImgsData) {
 
     cleanImgData.push({
       imgUrl,
-      id,
+      imgID: id,
       description,
-      isFLipped: false,
-      isMatched: false,
       photographer,
       profileUrl,
     });
@@ -54,16 +54,4 @@ export function processImages(rawImgsData) {
   }
 
   return cleanImgData;
-}
-
-function duplicate(arr) {
-  let duplicate = [...arr, ...arr];
-  return duplicate;
-}
-
-export function prepareCards(imgs) {
-  // Duplicate images to create matching pair cards
-  let cards = [...imgs, ...imgs];
-
-  return shuffle(cards);
 }

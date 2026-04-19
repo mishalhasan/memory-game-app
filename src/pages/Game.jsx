@@ -28,7 +28,7 @@ export default function Game() {
         if (imgCards) setCards(imgCards);
         console.log("imgCards", imgCards);
         console.log("cards", cards);
-      } catch {
+      } catch (error) {
         setHasError(true);
       } finally {
         setLoading(false);
@@ -36,6 +36,21 @@ export default function Game() {
     }
     loadData();
   }, []);
+
+  //Checks final match & triggers to new page.
+  useEffect(() => {
+    if (!cards.length) return;
+    const allMatched = cards.every((card) => card.isMatched);
+
+    if (allMatched) {
+      //Adds a small delay for UX improvement
+      const timer = setTimeout(() => {
+        navigate("/game-over");
+      }, 300);
+
+      return () => clearTimeout(timer);
+    }
+  }, [cards]);
 
   if (loading) return <Loading />;
   if (hasError) return <Error />;

@@ -1,9 +1,11 @@
 import { useState, useEffect, useContext } from "react";
 import { GameContext } from "../context/GameContext.jsx";
 import Card from "./Card.jsx";
+import { useGameLogic } from "../hooks/useGameLogic.js";
 
 export default function GameBoard() {
   const { cards } = useContext(GameContext);
+  const { handleCardClick, cardsClickable } = useGameLogic();
 
   return (
     //<main className="min-h-screen w-full flex justify-center py-8 px-4">
@@ -16,9 +18,14 @@ export default function GameBoard() {
      <main className="min-h-screen w-full flex justify-center py-8 px-4 sm:px-6"> */}
         {/* <div className="bg-pink-200/30 p-4 sm:p-6 rounded-2xl flex flex-wrap justify-center gap-4 md:gap-14 lg:gap-4 lg:grid lg:grid-cols-6 w-full max-w-4xl lg:w-auto lg:max-w-none h-fit"> */}
         {/* <div className="flex flex-wrap justify-center gap-6 lg:grid lg:grid-cols-6 lg:px-6 "> */}
-        {cards.map((card, index) => (
+        {cards.map((card) => (
           // <div className=" min-w-[100px] basis-[150px] lg:flex-none lg:w-auto mx-auto md:mx-0 lg:mx-0">
-            <Card key={`${card.id}-${index}`} card={card} />
+          <Card
+            key={card.uniqueID}
+            card={card}
+            handleCardClick={handleCardClick}
+            cardsClickable={cardsClickable}
+          />
           // </div>
         ))}
       </div>

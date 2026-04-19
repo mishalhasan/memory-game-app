@@ -5,8 +5,10 @@ export const GameContext = createContext({
   cardPair: [null, null],
   load: false,
   cards: [],
+  cardsClickable: true,
   setScore: () => {},
-  setcardPair: () => {},
+  setCardPair: () => {},
   setLoad: () => {},
   setCards: () => {},
+  setCardsClickable:  () => {},
 });

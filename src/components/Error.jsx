@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function Error() {
   const navigate = useNavigate();
@@ -12,12 +12,24 @@ export default function Error() {
         <p className="text-lg text-pink-700">
           Something went wrong. Please try again later.
         </p>
-        <button
+        {/* <button
           className="w-fit px-6 py-3 bg-blue-300 text-pink-100 font-bold rounded-xl shadow-lg hover:bg-pink-300 hover:scale-105 transition transform duration-200"
           onClick={handleHome}
         >
           Return Home
-        </button>
+        </button> */}
+        <div className=" flex gap-3 ">
+          <Link to="/game">
+            <button className="w-fit px-6 py-3 bg-blue-300 text-pink-100 font-bold rounded-xl shadow-lg hover:bg-pink-300 hover:scale-105 transition transform duration-200">
+              Restart Game
+            </button>
+          </Link>
+          <Link to="/">
+            <button className="w-fit px-6 py-3 bg-white text-pink-400 font-bold rounded-xl shadow-lg hover:bg-pink-300 hover:scale-105 transition transform duration-200">
+              Return Home
+            </button>
+          </Link>
+        </div>
       </div>
     </div>
   );
