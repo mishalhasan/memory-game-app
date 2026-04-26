@@ -126,3 +126,13 @@ export const getBestTime = () => {
   const stored = localStorage.getItem("bestTime");
   return stored === null ? 0 : Number(stored);
 };
+
+/**
+ * Plays a sound effect from a given audio ref from the beginning.
+ */
+export const playSoundEffect = (soundRef) => {
+  const audio = soundRef.current;
+  audio.currentTime = 0;
+  audio.volume = 0.7;
+  audio.play();
+};

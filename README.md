@@ -1,6 +1,6 @@
 # Candy Memory Game 🍬
 
-A responsive memory card matching game featuring a candy theme, card flip animations, background music, and live scoring. Players flip cards, find matching pairs, and try to beat their best time.
+A responsive candy-themed memory card game featuring card reveal animations, sound effects, background music, and live scoring. Players match pairs and try to beat their best time.
 
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![Tailwind](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
@@ -14,6 +14,8 @@ A responsive memory card matching game featuring a candy theme, card flip animat
 - 🔊 Background music with mute toggle
 - ⏸️ Pause and resume mid-game
 - 📱 Responsive layout for mobile and desktop
+- 🎵 Sound effects on card flip and match
+- 🎉 Confetti celebration on new best time
 
 ---
 
@@ -123,5 +125,7 @@ theme: {
 ## Credits
 
 - Background music: [freesound.org](https://freesound.org/s/738853/) — License: Creative Commons 0
+- Flip sound: [freesound.org](https://freesound.org/s/506054/) by Mellau — License: Attribution NonCommercial 4.0
+- Match sound: [freesound.org](https://freesound.org/s/243701/) by ertfelda — License: Creative Commons 0
 - Card images: [Unsplash](https://unsplash.com) — Attribution included per image via API metadata
 - Landing page imagery: Google Gemini (AI-generated)

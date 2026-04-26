@@ -1,11 +1,15 @@
 import { useGameNavigation } from "../hooks/useGameNavigation";
+import { useRecordCelebration } from "../hooks/useRecordCelebration";
 import { useContext } from "react";
 import { GameContext } from "../context/GameContext";
 import { formatTime, getBestTime } from "../utils/helpers";
+import confetti from "canvas-confetti";
 
 export default function GameOver() {
   const { goHome, restartGame } = useGameNavigation();
-  const { elapsedTime } = useContext(GameContext);
+  const { elapsedTime, moves } = useContext(GameContext);
+
+  const isNewRecord = useRecordCelebration(elapsedTime, getBestTime());
 
   return (
     <div
@@ -23,24 +27,38 @@ export default function GameOver() {
                   px-12 py-10 max-w-md w-full"
       >
         <h1 className=" font-cursive text-5xl font-bold text-pink-500 tracking-tight">
-          Game Over
+          Sweet Victory!
         </h1>
 
         {/* stats */}
-        <div className="flex flex-col gap-2 items-center">
-          <h2 className="text-3xl font-[poppins] font-semibold text-blue-800">
-            Time:{" "}
-            <span className=" text-blue-800 font-[inter] font-semibold">
-              {formatTime(elapsedTime)}
-            </span>
-          </h2>
+        <div className="flex flex-col gap-3 items-center">
+          <div className="flex justify-center gap-4">
+            <h3 className="text-2xl font-[poppins] font-semibold text-blue-800">
+              Time:{" "}
+              <span className=" text-blue-800 font-[inter] font-semibold">
+                {formatTime(elapsedTime)}
+              </span>
+            </h3>
 
-          <h3 className="text-lg font-[poppins] font-bold  text-purple-900">
-            Best:{" "}
+            <h3 className="text-2xl font-[poppins] font-semibold text-blue-800">
+              Moves:{" "}
+              <span className=" text-blue-800 font-[inter] font-semibold">
+                {moves}
+              </span>
+            </h3>
+          </div>
+
+          <h4 className="text-lg font-[poppins] font-bold  text-purple-900">
+            Best Time:{" "}
             <span className="text-purple-900 font-[inter] font-bold">
               {formatTime(getBestTime())}
             </span>
-          </h3>
+          </h4>
+          
+          <span className={`${isNewRecord ? "block" : "hidden"} mt-5 text-lg font-[poppins] font-bold  text-amber-400/80`}>
+            🏆 New Personal Best!
+          </span>
+
         </div>
 
         {/* buttons */}

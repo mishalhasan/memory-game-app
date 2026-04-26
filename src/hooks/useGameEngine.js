@@ -1,11 +1,14 @@
 import { useState, useEffect, useRef } from "react";
 import { fetchCandyLandPhotos } from "../api/cards.js";
 import bgAudio from "../assets/audio/candy-bg.mp3";
+import flipAudio from "../assets/audio/click.mp3";
+import matchAudio from "../assets/audio/matched.wav";
 
 import {
   prepareCards,
   isValidCard,
   toggleCardStatus,
+  playSoundEffect,
   delay,
   shuffle,
 } from "../utils/helpers.js";
@@ -26,6 +29,8 @@ export const useGameEngine = () => {
 
   const intervalRef = useRef(null);
   const audioRef = useRef(new Audio(bgAudio));
+  const flipSoundRef = useRef(new Audio(flipAudio));
+  const matchSoundRef = useRef(new Audio(matchAudio));
 
   /*** GAME SETUP/END ***/
 
@@ -90,6 +95,7 @@ export const useGameEngine = () => {
     setStartTimestamp(Date.now());
     setGameState("playing");
     audioRef.current.play();
+    audioRef.current.volume = 0.1;
   };
 
   /*** HANDLE FUNCTIONS ***/
@@ -105,12 +111,14 @@ export const useGameEngine = () => {
   };
 
   /**
-   * Toggles mute state of background music.
+   * Toggles mute state of background music and sound effects.
    */
   const handleMute = () => {
     setAudioMute((prev) => {
       const newMuted = !prev;
       audioRef.current.muted = newMuted;
+      flipSoundRef.current.muted = newMuted;
+      matchSoundRef.current.muted = newMuted;
       return newMuted;
     });
   };
@@ -167,6 +175,8 @@ export const useGameEngine = () => {
     setGameState("playing");
     setCardsClickable(true);
     audioRef.current.muted = false;
+    matchSoundRef.current.muted = false;
+    flipSoundRef.current.muted = false;
   };
 
   /**
@@ -211,7 +221,7 @@ export const useGameEngine = () => {
 
   /**
    * Handles card selection logic for matching pairs.
-   * Manages flip state, match checking, and move counter.
+   * Manages flip state, match checking, move counter, and sound effects.
    */
   const handleCardClick = async (card) => {
     //ignore invalid cards/states where user already clicked card
@@ -222,6 +232,9 @@ export const useGameEngine = () => {
       !isValidCard(card)
     )
       return;
+
+    //Play flip sound
+    playSoundEffect(flipSoundRef);
 
     //On first click ensuures timer started, update game state, ensure music on
     handleGameBegin();
@@ -264,6 +277,9 @@ export const useGameEngine = () => {
 
           return updatedCard2;
         });
+
+        //Play audio on successful match
+        playSoundEffect(matchSoundRef);
       } else {
         await delay(1150);
 
